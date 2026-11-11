@@ -1,0 +1,52 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-09T10:05:00Z" },
+  "title": "Internal Auto-ML — chat UX",
+  "launch": { "view": "canvas", "page": "v3" },
+  "pages": [
+    { "id": "v1", "name": "v1 · first pass" },
+    { "id": "v2", "name": "v2 · minimal" },
+    { "id": "v3", "name": "v3 · agentic" }
+  ],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 1150, "title": "1 · Ask & frame", "expand": "fill", "page": "v1" },
+    "Discover.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 1500, "title": "2 · Discover & plan", "expand": "fill", "page": "v1" },
+    "Loop.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 1750, "title": "3 · Train, evaluate, improve", "expand": "fill", "page": "v1" },
+    "Deliver.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 1550, "title": "4 · Deliver (try the Plain / Practitioner / Expert switch)", "expand": "fill", "is_interactive": true, "page": "v1" },
+    "V2Ask.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 960, "title": "1 · Ask", "expand": "fill", "page": "v2" },
+    "V2Live.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 1100, "title": "2 · Working (live demo: steps stream, then collapse; Replay to rerun)", "expand": "fill", "is_interactive": true, "page": "v2" },
+    "V2Decide.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 1000, "title": "3 · One decision", "expand": "fill", "page": "v2" },
+    "V2Improve.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 1100, "title": "4 · Not good enough yet", "expand": "fill", "page": "v2" },
+    "V2Result.dc.html": { "x": 6080, "y": 0, "w": 1440, "h": 1100, "title": "5 · Result (details on demand)", "expand": "fill", "page": "v2" },
+    "V2GoLive.dc.html": { "x": 7600, "y": 0, "w": 1440, "h": 1150, "title": "6 · Go live", "expand": "fill", "page": "v2" },
+    "V2Maintain.dc.html": { "x": 9120, "y": 0, "w": 1440, "h": 1500, "title": "7 · Live model (maintenance mode)", "expand": "fill", "page": "v2" },
+    "V3Home.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 1100, "title": "1 · Home: your agents, sorted by what needs you", "expand": "fill", "page": "v3" },
+    "V3Agent.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 1150, "title": "2 · Agent at work (live demo: plan + outputs update as it goes; Replay to rerun)", "expand": "fill", "is_interactive": true, "page": "v3" },
+    "V3Live.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 1150, "title": "3 · Live model: the agent stays on as caretaker", "expand": "fill", "page": "v3" },
+    "V3Settings.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 1300, "title": "4 · Settings (click through the sections)", "expand": "fill", "is_interactive": true, "page": "v3" },
+    "V3Composer.dc.html": { "x": 6080, "y": 0, "w": 960, "h": 860, "title": "Composer spec: / commands and Shift+Tab modes", "page": "v3" }
+  },
+  "order": ["Main.dc.html", "Discover.dc.html", "Loop.dc.html", "Deliver.dc.html", "V2Ask.dc.html", "V2Live.dc.html", "V2Decide.dc.html", "V2Improve.dc.html", "V2Result.dc.html", "V2GoLive.dc.html", "V2Maintain.dc.html", "V3Home.dc.html", "V3Agent.dc.html", "V3Live.dc.html", "V3Settings.dc.html", "V3Composer.dc.html"],
+  "notes": {
+    "title": { "x": 0, "y": -300, "text": "Model Desk — four key moments of one request (worked example: SIPP transfer-out risk)", "kind": "title1", "maxW": 5920, "page": "v1" },
+    "n1": { "x": 0, "y": 1880, "w": 560, "size": "m", "fill": "blue", "page": "v1", "text": "1 · Ask & frame\nIntent: start from the decision, not the algorithm. Business questions that quietly set ML choices (horizon, call capacity → precision@K).\nAI Elements: Conversation, Message, Reasoning (collapsed), Suggestion chips, Inline jargon tooltip, Prompt Input, Context.\nPanel: live Model Brief + adjacent model + 'Tailored for you' memory card." },
+    "n2": { "x": 1520, "y": 1880, "w": 560, "size": "m", "fill": "blue", "page": "v1", "text": "2 · Discover & plan\nIntent: show the work as steps, cite sources, ask only at a boundary (confidential data).\nAI Elements: Chain of Thought, Shimmer, Sources, Confirmation, Plan, Actions.\nPanel: ontology entities → tables, base rate, fields excluded for leakage, baseline model." },
+    "n3": { "x": 3040, "y": 1880, "w": 560, "size": "m", "fill": "blue", "page": "v1", "text": "3 · Train, evaluate, improve\nIntent: failure is a diagnosis + next hypothesis, and the agent keeps going inside the agreed budget.\nAI Elements: Checkpoint, Task, Tool (collapsed), Reasoning, Plan (diff), Queue (steering messages + experiments), Context (credits), Loader.\nPanel: runs vs target, leaderboard, checkpoint timeline with restore / branch." },
+    "n4": { "x": 4560, "y": 1880, "w": 560, "size": "m", "fill": "blue", "page": "v1", "text": "4 · Deliver\nIntent: a model card the user can trust and share, explained at their level; background improvement is an explicit, budgeted offer.\nAI Elements: Checkpoint, Artifact, Confirmation, Actions, Suggestion, Prompt Input.\nPanel: model card. Toggle Plain / Practitioner / Expert to see memory-driven explanation levels." },
+    "v2title": { "x": 0, "y": -300, "text": "Model Desk v2 — one column, one decision at a time, work collapses when done", "kind": "title1", "maxW": 10560, "page": "v2" },
+    "v2n1": { "x": 0, "y": 1200, "w": 560, "size": "m", "fill": "blue", "page": "v2", "text": "1 · Ask\nFrustrations answered: questions I can't answer (business-only, 'Not sure' default) · dead ends (feasibility check in seconds) · duplicates (existing model surfaced) · late governance surprise (prototype said up front).\nElements: Message, Reasoning (collapsed line), Suggestion → decision dock, Prompt Input." },
+    "v2n2": { "x": 1520, "y": 1200, "w": 560, "size": "m", "fill": "blue", "page": "v2", "text": "2 · Working\nRule: only the active step is open. Reasoning, ontology search, SQL and Python stream in, then fold to one line with a result + duration. Click any line to reopen.\nLong waits: honest time left + 'go, I'll message you on Teams'. Steering goes to a queue.\nElements: Chain of Thought, Reasoning, Tool, Code Block, Shimmer, Queue, Prompt Input." },
+    "v2n3": { "x": 3040, "y": 1200, "w": 560, "size": "m", "fill": "blue", "page": "v2", "text": "3 · One decision\nAll approvals batched into one card: plan, success bar, budget and the confidential-data switch. One 'Start' click, then the agent runs on its own within this budget.\nElements: Chain of Thought (collapsed), Plan, Confirmation (inline switch), Actions." },
+    "v2n4": { "x": 4560, "y": 1200, "w": 560, "size": "m", "fill": "blue", "page": "v2", "text": "4 · Not good enough yet\nShortfall in one line, three reasons, what changes next. Keeps going without asking. Progress-to-target track instead of a leaderboard. Queued steering visible.\nElements: Checkpoint, Task (collapsed), Plan diff (as prose), Loader, Queue." },
+    "v2n5": { "x": 6080, "y": 1200, "w": 560, "size": "m", "fill": "blue", "page": "v2", "text": "5 · Result\nOne sentence + one chart. Main action is the thing they need ('Get this week's 500 clients'), not metrics. The model card opens in a drawer only when asked (shown open here).\nElements: Artifact (drawer), Actions, Confirmation (background toggle), Suggestion." },
+    "v3title": { "x": 0, "y": -300, "text": "Model Desk v3 — agents, not chats: inbox on the left, the work in the middle, the plan on the right", "kind": "title1", "maxW": 7040, "page": "v3" },
+    "v3n1": { "x": 0, "y": 1240, "w": 560, "size": "m", "fill": "blue", "page": "v3", "text": "1 · Home\nAttention routing across many agents. Left = agent inbox grouped Needs you / Working / Live (not chat history). Simple decisions are made inline here without opening the agent. New requests start from the decision, and it checks what already exists first." },
+    "v3n2": { "x": 1520, "y": 1240, "w": 560, "size": "m", "fill": "blue", "page": "v3", "text": "2 · Agent at work\nCentre: activity stream; only the live step is open, finished steps fold to one line. Right: the agent's plan (its spine), outputs it has produced as openable objects, budget, and the autonomy setting. Header: process controls (pause / stop). Chat steers the plan rather than driving each step.\nComposer: type / for commands (arrow keys + Enter), Shift+Tab cycles Ask before running → Auto within budget → Plan mode. 'Running as you' shows the Snowflake role, warehouse and sandbox.\nElements: Plan, Task, Queue, Chain of Thought, Tool, Code Block, Artifact, Context, Confirmation, Prompt Input (with command menu)." },
+    "v3n4": { "x": 4560, "y": 1400, "w": 560, "size": "m", "fill": "blue", "page": "v3", "text": "4 · Settings\nModelled on claude.ai settings: General, Memory, Agent behaviour (default mode + 'always ask' list, some locked by admin), Commands (yours + team), Snowflake and roles (SPCS: signed in via Snowflake, acts as your role; Model Desk app roles User / Approver / Admin), Budget and usage (monthly limit set by admin, per-request defaults), Notifications, Privacy and audit." },
+    "v3n5": { "x": 6080, "y": 960, "w": 560, "size": "m", "fill": "blue", "page": "v3", "text": "Composer spec\nStatic reference for the command menu and the three modes. Governance sits outside the modes: Confidential data and go-live always need approval, enforced by roles." },
+    "v3n3": { "x": 3040, "y": 1240, "w": 560, "size": "m", "fill": "blue", "page": "v3", "text": "3 · Live model\nSame three-pane shape, different job: the agent is a caretaker. Right panel = its standing orders (what it checks, how often, what it may do alone) and recent changes. Centre = health + its suggestions, each tagged by change size." },
+    "v2n6": { "x": 7600, "y": 1640, "w": 560, "size": "m", "fill": "blue", "page": "v2", "text": "6 · Go live\nA guided path, not a button: where the list goes, when, owners, a 2-week shadow run, auto-written review pack. Sets the maintenance policy up front: retrain on fresh data = pre-approved; new data = back to review.\nElements: Plan, Confirmation, Actions." },
+    "v2n7": { "x": 9120, "y": 1640, "w": 560, "size": "m", "fill": "blue", "page": "v2", "text": "7 · Live model\nHealth in one sentence, honest about the 90-day outcome lag. Agent-raised suggestions, each tagged by how much change it means: setting / rule (instant), retrain (pre-approved, shadow-tested), new data (review). Challenger runs in shadow; one-click rollback. Chat tweaks become rules where possible.\nElements: Suggestion, Task, Confirmation, Checkpoint (history), Prompt Input." }
+  },
+  "designSystems": []
+}

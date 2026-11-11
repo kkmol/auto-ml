@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Model Desk v3 — Composer: commands and modes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;color:#0A0A0B;-webkit-font-smoothing:antialiased}
+button,textarea{font-family:inherit}
+.mono{font-family:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
+.caret{display:inline-block;width:2px;height:18px;vertical-align:-3px;background:#0A0A0B;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+</style>
+</helmet>
+<div style="width: 960px; height: 860px; box-sizing: border-box; padding: 48px; background: #FFFFFF; display: flex; flex-direction: column; gap: 40px; font-size: 14.5px; line-height: 1.55">
+
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 13px; font-weight: 500; color: #52525B">Typing / opens the command menu</span>
+    <div style="display: flex; flex-direction: column; gap: 8px; width: 700px">
+      <div role="listbox" aria-label="Commands" style="box-sizing: border-box; padding: 6px; border: 1px solid #E4E4E7; border-radius: 14px; background: #FFFFFF; box-shadow: 0 16px 40px rgba(10,10,11,0.14)">
+        <div style="padding: 8px 10px 4px; font-size: 11.5px; font-weight: 500; color: #52525B">This agent</div>
+        <div role="option" aria-selected="true" style="display: flex; align-items: baseline; gap: 14px; padding: 7px 10px; border-radius: 8px; background: #F4F4F5"><span class="mono" style="flex: none; width: 140px; font-size: 13px">/plan</span><span style="font-size: 13px; color: #52525B">Show or edit the agent's plan</span></div>
+        <div role="option" aria-selected="false" style="display: flex; align-items: baseline; gap: 14px; padding: 7px 10px; border-radius: 8px"><span class="mono" style="flex: none; width: 140px; font-size: 13px">/data</span><span style="font-size: 13px; color: #52525B">Browse the data your role can see</span></div>
+        <div role="option" aria-selected="false" style="display: flex; align-items: baseline; gap: 14px; padding: 7px 10px; border-radius: 8px"><span class="mono" style="flex: none; width: 140px; font-size: 13px">/budget</span><span style="font-size: 13px; color: #52525B">Change this request's budget</span></div>
+        <div role="option" aria-selected="false" style="display: flex; align-items: baseline; gap: 14px; padding: 7px 10px; border-radius: 8px"><span class="mono" style="flex: none; width: 140px; font-size: 13px">/explain</span><span style="font-size: 13px; color: #52525B">Explain the last step in plain English</span></div>
+        <div role="option" aria-selected="false" style="display: flex; align-items: baseline; gap: 14px; padding: 7px 10px; border-radius: 8px"><span class="mono" style="flex: none; width: 140px; font-size: 13px">/golive</span><span style="font-size: 13px; color: #52525B">Start the go-live checklist</span></div>
+        <div style="padding: 8px 10px 4px; font-size: 11.5px; font-weight: 500; color: #52525B">You</div>
+        <div role="option" aria-selected="false" style="display: flex; align-items: baseline; gap: 14px; padding: 7px 10px; border-radius: 8px"><span class="mono" style="flex: none; width: 140px; font-size: 13px">/role</span><span style="font-size: 13px; color: #52525B">Switch Snowflake role</span></div>
+        <div style="padding: 8px 10px 4px; font-size: 11.5px; font-weight: 500; color: #52525B">Your commands</div>
+        <div role="option" aria-selected="false" style="display: flex; align-items: baseline; gap: 14px; padding: 7px 10px; border-radius: 8px"><span class="mono" style="flex: none; width: 140px; font-size: 13px">/weekly-list</span><span style="font-size: 13px; color: #52525B">Export the top N in the dialler's format</span></div>
+        <div style="display: flex; gap: 14px; padding: 8px 10px 4px; margin-top: 4px; border-top: 1px solid #EDEDEF; font-size: 11.5px; color: #52525B"><span>↑↓ to move</span><span>Enter to choose</span><span>Esc to close</span></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; border: 1px solid #A1A1AA; border-radius: 16px; padding: 8px 8px 8px 16px">
+        <span style="flex: 1; padding: 8px 0; font-size: 15px">/<span class="caret"></span></span>
+        <span aria-hidden="true" style="width: 38px; height: 38px; border-radius: 19px; background: #F4F4F5"></span>
+      </div>
+      <div style="display: flex; justify-content: space-between; padding: 0 6px; font-size: 12.5px">
+        <span style="display: flex; align-items: center; gap: 7px; color: #52525B; font-weight: 500"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4M12 16h.01"></path></svg>Ask before running <span style="font-weight: 400; color: #71717A">(shift+tab to cycle)</span></span>
+        <span style="color: #52525B">1.3 of 40 credits · <span class="mono">/</span> for commands</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 14px; width: 700px">
+    <span style="font-size: 13px; font-weight: 500; color: #52525B">Shift+Tab cycles the mode, shown under the input</span>
+    <div style="display: grid; grid-template-columns: 250px 1fr; gap: 14px 24px; align-items: baseline">
+      <span style="display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; color: #52525B"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4M12 16h.01"></path></svg>Ask before running</span>
+      <span style="font-size: 14px; color: #3F3F46">Default. Researches on its own; asks before each training run or anything that writes data.</span>
+      <span style="display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; color: #9A3B06"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="fill: currentColor"><path d="M3 5l9 7-9 7zM12 5l9 7-9 7z"></path></svg>Auto within budget</span>
+      <span style="font-size: 14px; color: #3F3F46">Keeps going on its own until it reaches the request's budget.</span>
+      <span style="display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; color: #1D44B0"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="fill: currentColor"><rect x="5" y="4" width="5" height="16" rx="1"></rect><rect x="14" y="4" width="5" height="16" rx="1"></rect></svg>Plan mode</span>
+      <span style="font-size: 14px; color: #3F3F46">Only researches and plans. Nothing is trained or written, and almost no credits are used.</span>
+    </div>
+    <p style="margin: 4px 0 0; padding: 12px 14px; border-radius: 10px; background: #FAFAFA; font-size: 13.5px; color: #3F3F46">In every mode, Confidential data and going live still need approval, enforced by your Snowflake and Model Desk roles rather than by the mode.</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":960,"height":860}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

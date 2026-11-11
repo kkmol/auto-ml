@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Model Desk v3 — Settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;color:#0A0A0B;-webkit-font-smoothing:antialiased}
+button,textarea,input{font-family:inherit}
+a{color:#2454D6}a:hover{color:#1A3FA6}
+.mono{font-family:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column; background: #FFFFFF; font-size: 14.5px; line-height: 1.55">
+
+  <header style="display: flex; align-items: center; gap: 12px; padding: 14px 24px; border-bottom: 1px solid #EDEDEF">
+    <a href="V3Home.dc.html" style="display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px 0 6px; border-radius: 8px; text-decoration: none; color: #3F3F46; font-size: 13.5px">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="m15 18-6-6 6-6"></path></svg>
+      Model Desk
+    </a>
+    <h1 style="margin: 0; font-size: 15px; font-weight: 600">Settings</h1>
+  </header>
+
+  <div style="flex: 1; width: 100%; max-width: 1080px; margin: 0 auto; box-sizing: border-box; padding: 36px 32px 64px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+
+    <nav aria-label="Settings sections" style="flex: 1 1 200px; max-width: 100%; display: flex; flex-direction: column; gap: 2px">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="8">
+        <div>
+          <sc-if value="{{ n.gap }}" hint-placeholder-val="{{ false }}"><div style="height: 14px"></div></sc-if>
+          <sc-if value="{{ n.selected }}" hint-placeholder-val="{{ false }}">
+            <button type="button" aria-current="page" onClick="{{ n.pick }}" style="width: 100%; height: 36px; padding: 0 12px; border: 0; border-radius: 8px; background: #F4F4F5; color: #0A0A0B; font-size: 14px; font-weight: 500; text-align: left; cursor: pointer">{{ n.label }}</button>
+          </sc-if>
+          <sc-if value="{{ n.unselected }}" hint-placeholder-val="{{ true }}">
+            <button type="button" onClick="{{ n.pick }}" style="width: 100%; height: 36px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: #3F3F46; font-size: 14px; text-align: left; cursor: pointer">{{ n.label }}</button>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <main style="flex: 999 1 520px; min-width: 0; max-width: 720px; display: flex; flex-direction: column; gap: 32px">
+
+      <!-- GENERAL -->
+      <sc-if value="{{ sGeneral }}" hint-placeholder-val="{{ false }}">
+        <section aria-labelledby="h-general" style="display: flex; flex-direction: column; gap: 28px">
+          <h2 id="h-general" style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">General</h2>
+          <div style="display: flex; flex-direction: column; gap: 16px">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B">Profile</span>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 16px">
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 500">Full name<input type="text" value="Sam Patel" readonly style="height: 40px; padding: 0 12px; border: 1px solid #E4E4E7; border-radius: 8px; background: #FAFAFA; font-size: 14.5px; color: #3F3F46"><span style="font-size: 12.5px; font-weight: 400; color: #52525B">From your Snowflake user</span></label>
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 500">What should Model Desk call you?<input type="text" value="Sam" style="height: 40px; padding: 0 12px; border: 1px solid #E4E4E7; border-radius: 8px; font-size: 14.5px"></label>
+            </div>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 500">What do you work on?
+              <textarea rows="3" style="padding: 10px 12px; border: 1px solid #E4E4E7; border-radius: 8px; font-size: 14.5px; line-height: 1.55; resize: vertical">I run outbound retention campaigns for SIPP and ISA clients. I care about who to call and why, more than model scores.</textarea>
+              <span style="font-size: 12.5px; font-weight: 400; color: #52525B">Model Desk uses this to frame its questions and results for you.</span>
+            </label>
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-top: 1px solid #EDEDEF">
+              <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 2px"><span id="lvl" style="font-weight: 500">How much jargon</span><span style="font-size: 13.5px; color: #52525B">Plain English defines every ML term. Expert shows metrics and code as-is.</span></div>
+              <div role="group" aria-labelledby="lvl" style="display: flex; gap: 2px; padding: 3px; border-radius: 10px; background: #F4F4F5">
+                <button type="button" aria-pressed="true" style="height: 34px; padding: 0 12px; border: 0; border-radius: 7px; background: #FFFFFF; font-size: 13.5px; font-weight: 500; box-shadow: 0 1px 3px rgba(10,10,11,0.12); cursor: pointer">Plain</button>
+                <button type="button" aria-pressed="false" style="height: 34px; padding: 0 12px; border: 0; border-radius: 7px; background: transparent; color: #3F3F46; font-size: 13.5px; cursor: pointer">Practitioner</button>
+                <button type="button" aria-pressed="false" style="height: 34px; padding: 0 12px; border: 0; border-radius: 7px; background: transparent; color: #3F3F46; font-size: 13.5px; cursor: pointer">Expert</button>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-top: 1px solid #EDEDEF">
+              <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Adjust the level from how I talk</span><span style="font-size: 13.5px; color: #52525B">If you start asking for SHAP values, I'll stop defining "precision". I'll tell you when I change it.</span></div>
+              <button type="button" role="switch" aria-checked="true" aria-label="Adjust the level from how I talk" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-top: 1px solid #EDEDEF; border-bottom: 1px solid #EDEDEF">
+              <span id="theme" style="font-weight: 500">Appearance</span>
+              <div role="group" aria-labelledby="theme" style="display: flex; gap: 2px; padding: 3px; border-radius: 10px; background: #F4F4F5">
+                <button type="button" aria-pressed="false" style="height: 34px; padding: 0 12px; border: 0; border-radius: 7px; background: transparent; color: #3F3F46; font-size: 13.5px; cursor: pointer">Light</button>
+                <button type="button" aria-pressed="false" style="height: 34px; padding: 0 12px; border: 0; border-radius: 7px; background: transparent; color: #3F3F46; font-size: 13.5px; cursor: pointer">Dark</button>
+                <button type="button" aria-pressed="true" style="height: 34px; padding: 0 12px; border: 0; border-radius: 7px; background: #FFFFFF; font-size: 13.5px; font-weight: 500; box-shadow: 0 1px 3px rgba(10,10,11,0.12); cursor: pointer">Match system</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+
+      <!-- MEMORY -->
+      <sc-if value="{{ sMemory }}" hint-placeholder-val="{{ false }}">
+        <section aria-labelledby="h-memory" style="display: flex; flex-direction: column; gap: 24px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <h2 id="h-memory" style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Memory</h2>
+            <p style="margin: 0; color: #52525B">What Model Desk learns about you, so you don't have to repeat yourself. Stored in Snowflake under your user, never shared with other people.</p>
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-top: 1px solid #EDEDEF">
+              <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Remember things across requests</span><span style="font-size: 13.5px; color: #52525B">Your team, your call capacity, how you like results explained.</span></div>
+              <button type="button" role="switch" aria-checked="true" aria-label="Remember things across requests" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-top: 1px solid #EDEDEF; border-bottom: 1px solid #EDEDEF">
+              <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Use my past requests</span><span style="font-size: 13.5px; color: #52525B">Reuse signals, data and decisions from models you've already built.</span></div>
+              <button type="button" role="switch" aria-checked="true" aria-label="Use my past requests" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B">What I remember about you</span>
+            <ul style="list-style: none; margin: 0; padding: 0; border: 1px solid #EDEDEF; border-radius: 12px">
+              <li style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 8px 10px 14px">You're in Retention, and call lists go to the outbound dialler<button type="button" aria-label="Forget this" style="flex: none; width: 30px; height: 30px; border: 0; border-radius: 6px; background: none; color: #71717A; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></li>
+              <li style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 8px 10px 14px; border-top: 1px solid #EDEDEF">Your team can call about 500 clients a week<button type="button" aria-label="Forget this" style="flex: none; width: 30px; height: 30px; border: 0; border-radius: 6px; background: none; color: #71717A; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></li>
+              <li style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 8px 10px 14px; border-top: 1px solid #EDEDEF">You prefer results as "1 in 4" rather than percentages<button type="button" aria-label="Forget this" style="flex: none; width: 30px; height: 30px; border: 0; border-radius: 6px; background: none; color: #71717A; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></li>
+              <li style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 8px 10px 14px; border-top: 1px solid #EDEDEF">Clients with an open complaint shouldn't be on call lists<button type="button" aria-label="Forget this" style="flex: none; width: 30px; height: 30px; border: 0; border-radius: 6px; background: none; color: #71717A; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></li>
+            </ul>
+            <button type="button" style="align-self: flex-start; height: 36px; padding: 0 14px; border: 1px solid #E4E4E7; border-radius: 8px; background: #FFFFFF; font-size: 13.5px; cursor: pointer">Clear all memory</button>
+          </div>
+        </section>
+      </sc-if>
+
+      <!-- AGENT BEHAVIOUR -->
+      <sc-if value="{{ sAgent }}" hint-placeholder-val="{{ false }}">
+        <section aria-labelledby="h-agent" style="display: flex; flex-direction: column; gap: 24px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <h2 id="h-agent" style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Agent behaviour</h2>
+            <p style="margin: 0; color: #52525B">How much the agent does before checking with you. You can change the mode in any request with <span class="mono" style="font-size: 13px; padding: 1px 6px; border-radius: 5px; background: #F4F4F5">shift+tab</span>.</p>
+          </div>
+          <div role="radiogroup" aria-label="Default mode for new requests" style="display: flex; flex-direction: column; gap: 8px">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B">Default mode for new requests</span>
+            <button type="button" role="radio" aria-checked="true" style="display: flex; gap: 12px; padding: 14px 16px; border: 1.5px solid #0A0A0B; border-radius: 12px; background: #FFFFFF; text-align: left; cursor: pointer"><span style="flex: none; margin-top: 3px; width: 16px; height: 16px; border-radius: 8px; border: 5px solid #0A0A0B; box-sizing: border-box"></span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500; font-size: 14.5px">Ask before running</span><span style="font-size: 13.5px; color: #52525B">Researches on its own, asks before each training run or anything that writes data.</span></span></button>
+            <button type="button" role="radio" aria-checked="false" style="display: flex; gap: 12px; padding: 14px 16px; border: 1px solid #E4E4E7; border-radius: 12px; background: #FFFFFF; text-align: left; cursor: pointer"><span style="flex: none; margin-top: 3px; width: 16px; height: 16px; border-radius: 8px; border: 1.5px solid #A1A1AA; box-sizing: border-box"></span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500; font-size: 14.5px">Auto within budget</span><span style="font-size: 13.5px; color: #52525B">Keeps going until it hits the request's budget.</span></span></button>
+            <button type="button" role="radio" aria-checked="false" style="display: flex; gap: 12px; padding: 14px 16px; border: 1px solid #E4E4E7; border-radius: 12px; background: #FFFFFF; text-align: left; cursor: pointer"><span style="flex: none; margin-top: 3px; width: 16px; height: 16px; border-radius: 8px; border: 1.5px solid #A1A1AA; box-sizing: border-box"></span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500; font-size: 14.5px">Plan mode</span><span style="font-size: 13.5px; color: #52525B">Only researches and plans. Nothing is trained or written.</span></span></button>
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B; padding-bottom: 6px">Always ask me before, in every mode</span>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF">
+              <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Using Confidential data</span><span style="font-size: 13px; color: #52525B">Set by your admin</span></div>
+              <button type="button" role="switch" aria-checked="true" disabled aria-label="Using Confidential data, locked on" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #93A9EA; position: relative"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF">
+              <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Going live</span><span style="font-size: 13px; color: #52525B">Needs someone with <span class="mono" style="font-size: 12.5px">MODELDESK_APPROVER</span></span></div>
+              <button type="button" role="switch" aria-checked="true" disabled aria-label="Going live, locked on" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #93A9EA; position: relative"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF">
+              <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Writing outside my sandbox</span><span style="font-size: 13px; color: #52525B">Anything outside <span class="mono" style="font-size: 12.5px">ML_PROTO.SPATEL</span></span></div>
+              <button type="button" role="switch" aria-checked="true" aria-label="Writing outside my sandbox" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF; border-bottom: 1px solid #EDEDEF">
+              <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Starting background improvement</span><span style="font-size: 13px; color: #52525B">Uses your monthly background budget</span></div>
+              <button type="button" role="switch" aria-checked="true" aria-label="Starting background improvement" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+            <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Show SQL and Python while it works</span><span style="font-size: 13.5px; color: #52525B">Off shows a one-line summary of each step instead.</span></div>
+            <button type="button" role="switch" aria-checked="true" aria-label="Show SQL and Python while it works" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button>
+          </div>
+        </section>
+      </sc-if>
+
+      <!-- COMMANDS -->
+      <sc-if value="{{ sCommands }}" hint-placeholder-val="{{ false }}">
+        <section aria-labelledby="h-commands" style="display: flex; flex-direction: column; gap: 24px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <h2 id="h-commands" style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Commands</h2>
+            <p style="margin: 0; color: #52525B">Type <span class="mono" style="font-size: 13px; padding: 1px 6px; border-radius: 5px; background: #F4F4F5">/</span> in any request. A command is a saved instruction: write it the way you'd ask a colleague.</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+              <span style="font-size: 13px; font-weight: 500; color: #52525B">Your commands</span>
+              <button type="button" style="height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: #0A0A0B; color: #FFFFFF; font-size: 13px; font-weight: 500; cursor: pointer">New command</button>
+            </div>
+            <ul style="list-style: none; margin: 0; padding: 0; border: 1px solid #EDEDEF; border-radius: 12px">
+              <li style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; padding: 12px 14px"><span style="display: flex; flex-direction: column; gap: 2px"><span class="mono" style="font-size: 13.5px">/weekly-list</span><span style="font-size: 13.5px; color: #52525B">Export the top N clients in the dialler's CSV format, skipping anyone with an open complaint</span></span><a href="#" style="font-size: 13px; text-decoration: none">Edit</a></li>
+              <li style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; padding: 12px 14px; border-top: 1px solid #EDEDEF"><span style="display: flex; flex-direction: column; gap: 2px"><span class="mono" style="font-size: 13.5px">/manager-summary</span><span style="font-size: 13.5px; color: #52525B">One page: what the model does, how good it is, what it costs</span></span><a href="#" style="font-size: 13px; text-decoration: none">Edit</a></li>
+            </ul>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B">Shared by Retention</span>
+            <ul style="list-style: none; margin: 0; padding: 0; border: 1px solid #EDEDEF; border-radius: 12px">
+              <li style="display: flex; flex-direction: column; gap: 2px; padding: 12px 14px"><span class="mono" style="font-size: 13.5px">/campaign-brief</span><span style="font-size: 13.5px; color: #52525B">Turn a model's top drivers into talking points for callers</span></li>
+            </ul>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B">Built in</span>
+            <span style="font-size: 13.5px; color: #3F3F46"><span class="mono" style="font-size: 13px">/plan /data /budget /pause /explain /compare /golive /share /role /level /settings</span></span>
+          </div>
+        </section>
+      </sc-if>
+
+      <!-- SNOWFLAKE -->
+      <sc-if value="{{ sSnowflake }}" hint-placeholder-val="{{ false }}">
+        <section aria-labelledby="h-snow" style="display: flex; flex-direction: column; gap: 24px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <h2 id="h-snow" style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Snowflake and roles</h2>
+            <p style="margin: 0; color: #52525B">Model Desk runs inside your Snowflake account on Snowpark Container Services. You sign in with Snowflake and the agent acts as you, so it can only see and change what your active role can.</p>
+          </div>
+          <dl style="margin: 0; display: grid; grid-template-columns: 160px 1fr; row-gap: 14px; column-gap: 20px; padding: 18px; border-radius: 12px; background: #FAFAFA">
+            <dt style="color: #52525B">Signed in as</dt><dd style="margin: 0"><span class="mono" style="font-size: 13.5px">SPATEL</span> · [YOUR ACCOUNT] · Snowflake OAuth</dd>
+            <dt style="color: #52525B">Active role</dt>
+            <dd style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+              <button type="button" style="display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 10px; border: 1px solid #E4E4E7; border-radius: 8px; background: #FFFFFF; cursor: pointer"><span class="mono" style="font-size: 13px">RETENTION_ANALYST</span><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="m6 9 6 6 6-6"></path></svg></button>
+              <span style="font-size: 13px; color: #52525B">Also available: <span class="mono" style="font-size: 12.5px">CX_REPORTING</span>, <span class="mono" style="font-size: 12.5px">PUBLIC</span></span>
+            </dd>
+            <dt style="color: #52525B">Warehouse</dt><dd style="margin: 0"><span class="mono" style="font-size: 13.5px">ML_WH_S</span> · largest you can use is Medium</dd>
+            <dt style="color: #52525B">Your sandbox</dt><dd style="margin: 0"><span class="mono" style="font-size: 13.5px">ML_PROTO.SPATEL</span> · where the agent writes tables, signals and models</dd>
+            <dt style="color: #52525B">Data you can read</dt><dd style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px">214 of 380 ontology entities<a href="#" style="font-size: 13.5px; text-decoration: none">Request more access</a></dd>
+          </dl>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF; border-bottom: 1px solid #EDEDEF">
+            <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Use secondary roles</span><span style="font-size: 13.5px; color: #52525B">Lets the agent combine data from all your roles. Off keeps each request to one role.</span></div>
+            <button type="button" role="switch" aria-checked="false" aria-label="Use secondary roles" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #D4D4D8; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B">Model Desk roles</span>
+            <div style="border: 1px solid #EDEDEF; border-radius: 12px; overflow-x: auto">
+              <table style="width: 100%; border-collapse: collapse; font-size: 13.5px">
+                <thead><tr style="text-align: left; color: #52525B"><th scope="col" style="padding: 10px 14px; font-weight: 500; border-bottom: 1px solid #EDEDEF">Role</th><th scope="col" style="padding: 10px 14px; font-weight: 500; border-bottom: 1px solid #EDEDEF">Can</th></tr></thead>
+                <tbody>
+                  <tr style="background: #F4F6FE"><td style="padding: 12px 14px; border-bottom: 1px solid #EDEDEF; white-space: nowrap"><span class="mono" style="font-size: 12.5px">MODELDESK_USER</span><br><span style="font-size: 12px; color: #1D44B0; font-weight: 500">You</span></td><td style="padding: 12px 14px; border-bottom: 1px solid #EDEDEF">Build and test models in your sandbox, run your own commands</td></tr>
+                  <tr><td style="padding: 12px 14px; border-bottom: 1px solid #EDEDEF"><span class="mono" style="font-size: 12.5px">MODELDESK_APPROVER</span></td><td style="padding: 12px 14px; border-bottom: 1px solid #EDEDEF">Approve going live and use of Confidential data</td></tr>
+                  <tr><td style="padding: 12px 14px"><span class="mono" style="font-size: 12.5px">MODELDESK_ADMIN</span></td><td style="padding: 12px 14px">Set budgets, warehouses and who has which role</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+
+      <!-- BUDGET -->
+      <sc-if value="{{ sBudget }}" hint-placeholder-val="{{ true }}">
+        <section aria-labelledby="h-budget" style="display: flex; flex-direction: column; gap: 28px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <h2 id="h-budget" style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Budget and usage</h2>
+            <p style="margin: 0; color: #52525B">Credits are Snowflake credits used on your warehouse. 1 credit is about [YOUR RATE].</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 14px; background: #FAFAFA">
+            <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px">
+              <span><span style="font-size: 28px; font-weight: 600; letter-spacing: -0.02em">47</span><span style="color: #52525B"> of 120 credits this month</span></span>
+              <span style="font-size: 13px; color: #52525B">Resets 1 Dec · limit set by your admin</span>
+            </div>
+            <div role="img" aria-label="47 of 120 credits used: 31 building models, 9 background improvement, 7 looking after live models" style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: #E4E4E7">
+              <span style="width: 25.8%; background: #2454D6"></span>
+              <span style="width: 7.5%; background: #6F8DE3; border-left: 2px solid #FAFAFA"></span>
+              <span style="width: 5.8%; background: #A9BDF5; border-left: 2px solid #FAFAFA"></span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 13px; color: #3F3F46">
+              <span style="display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #2454D6"></span>Building models · 31</span>
+              <span style="display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #6F8DE3"></span>Background improvement · 9</span>
+              <span style="display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #A9BDF5"></span>Looking after live models · 7</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B">By request</span>
+            <div style="border: 1px solid #EDEDEF; border-radius: 12px; overflow-x: auto">
+              <table style="width: 100%; border-collapse: collapse; font-size: 13.5px">
+                <tbody>
+                  <tr><td style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF">SIPP transfer-out risk</td><td style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF; color: #52525B">Building · 31 of 40</td><td class="mono" style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF; text-align: right">31</td></tr>
+                  <tr><td style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF">Fund switch volumes</td><td style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF; color: #52525B">Background · 9 of 20</td><td class="mono" style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF; text-align: right">9</td></tr>
+                  <tr><td style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF">Complaint themes</td><td style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF; color: #52525B">Building · 4 of 40</td><td class="mono" style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF; text-align: right">4</td></tr>
+                  <tr><td style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF">Call volume forecast</td><td style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF; color: #52525B">Live upkeep · 6 of 20</td><td class="mono" style="padding: 11px 14px; border-bottom: 1px solid #EDEDEF; text-align: right">6</td></tr>
+                  <tr><td style="padding: 11px 14px">Complaint routing</td><td style="padding: 11px 14px; color: #52525B">Live upkeep · 1 of 20</td><td class="mono" style="padding: 11px 14px; text-align: right">1</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B; padding-bottom: 6px">Defaults</span>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF">
+              <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 2px"><label for="b1" style="font-weight: 500">Budget for each new request</label><span style="font-size: 13px; color: #52525B">You can change it per request with <span class="mono" style="font-size: 12.5px">/budget</span></span></div>
+              <span style="display: flex; align-items: center; gap: 8px"><input id="b1" type="number" value="40" style="width: 76px; height: 36px; padding: 0 10px; border: 1px solid #E4E4E7; border-radius: 8px; font-size: 14px; text-align: right"><span style="font-size: 13.5px; color: #52525B">credits</span></span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF">
+              <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 2px"><label for="b2" style="font-weight: 500">Background improvement</label><span style="font-size: 13px; color: #52525B">Per request, per month</span></div>
+              <span style="display: flex; align-items: center; gap: 8px"><input id="b2" type="number" value="20" style="width: 76px; height: 36px; padding: 0 10px; border: 1px solid #E4E4E7; border-radius: 8px; font-size: 14px; text-align: right"><span style="font-size: 13.5px; color: #52525B">credits</span></span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF">
+              <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 2px"><label for="b3" style="font-weight: 500">Looking after a live model</label><span style="font-size: 13px; color: #52525B">Checks and retrains, per model, per month</span></div>
+              <span style="display: flex; align-items: center; gap: 8px"><input id="b3" type="number" value="20" style="width: 76px; height: 36px; padding: 0 10px; border: 1px solid #E4E4E7; border-radius: 8px; font-size: 14px; text-align: right"><span style="font-size: 13.5px; color: #52525B">credits</span></span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF">
+              <span id="runout" style="font-weight: 500">When a request runs out</span>
+              <div role="group" aria-labelledby="runout" style="display: flex; gap: 2px; padding: 3px; border-radius: 10px; background: #F4F4F5">
+                <button type="button" aria-pressed="true" style="height: 34px; padding: 0 12px; border: 0; border-radius: 7px; background: #FFFFFF; font-size: 13.5px; font-weight: 500; box-shadow: 0 1px 3px rgba(10,10,11,0.12); cursor: pointer">Finish the step, then ask</button>
+                <button type="button" aria-pressed="false" style="height: 34px; padding: 0 12px; border: 0; border-radius: 7px; background: transparent; color: #3F3F46; font-size: 13.5px; cursor: pointer">Stop straight away</button>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF; border-bottom: 1px solid #EDEDEF">
+              <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Warn me at 80% of my monthly limit</span></div>
+              <button type="button" role="switch" aria-checked="true" aria-label="Warn me at 80% of my monthly limit" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button>
+            </div>
+          </div>
+          <span style="font-size: 13.5px; color: #52525B">Need more? <a href="#" style="text-decoration: none">Ask an admin to raise your limit</a></span>
+        </section>
+      </sc-if>
+
+      <!-- NOTIFICATIONS -->
+      <sc-if value="{{ sNotify }}" hint-placeholder-val="{{ false }}">
+        <section aria-labelledby="h-notify" style="display: flex; flex-direction: column; gap: 24px">
+          <h2 id="h-notify" style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Notifications</h2>
+          <div style="display: flex; flex-direction: column">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B; padding-bottom: 6px">Tell me when</span>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF"><span style="font-weight: 500">An agent needs me</span><button type="button" role="switch" aria-checked="true" aria-label="An agent needs me" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button></div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF"><span style="font-weight: 500">A model is ready</span><button type="button" role="switch" aria-checked="true" aria-label="A model is ready" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button></div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF"><span style="font-weight: 500">Background improvement beats the current model</span><button type="button" role="switch" aria-checked="true" aria-label="Background improvement beats the current model" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button></div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF"><span style="font-weight: 500">A live model needs attention</span><button type="button" role="switch" aria-checked="true" aria-label="A live model needs attention" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button></div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF; border-bottom: 1px solid #EDEDEF"><span style="font-weight: 500">Weekly summary of my models</span><button type="button" role="switch" aria-checked="false" aria-label="Weekly summary of my models" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #D4D4D8; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button></div>
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <span style="font-size: 13px; font-weight: 500; color: #52525B; padding-bottom: 6px">Where</span>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF"><span style="font-weight: 500">Microsoft Teams</span><button type="button" role="switch" aria-checked="true" aria-label="Microsoft Teams" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button></div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF"><span style="font-weight: 500">Email, as a daily digest</span><button type="button" role="switch" aria-checked="false" aria-label="Email, as a daily digest" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #D4D4D8; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button></div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF; border-bottom: 1px solid #EDEDEF"><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Quiet hours</span><span style="font-size: 13px; color: #52525B">18:00 to 08:00 and weekends. Agents keep working; messages wait.</span></div><button type="button" role="switch" aria-checked="true" aria-label="Quiet hours" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 17px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button></div>
+          </div>
+        </section>
+      </sc-if>
+
+      <!-- PRIVACY -->
+      <sc-if value="{{ sPrivacy }}" hint-placeholder-val="{{ false }}">
+        <section aria-labelledby="h-privacy" style="display: flex; flex-direction: column; gap: 24px">
+          <h2 id="h-privacy" style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Privacy and audit</h2>
+          <div style="display: flex; flex-direction: column">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF">
+              <label for="keep" style="font-weight: 500">Keep my request history for</label>
+              <select id="keep" style="height: 36px; padding: 0 10px; border: 1px solid #E4E4E7; border-radius: 8px; background: #FFFFFF; font-size: 14px"><option>30 days</option><option selected>90 days</option><option>1 year</option></select>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF"><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">Let my team see my requests</span><span style="font-size: 13px; color: #52525B">They still only see data their own roles allow.</span></div><button type="button" role="switch" aria-checked="false" aria-label="Let my team see my requests" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #D4D4D8; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button></div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #EDEDEF; border-bottom: 1px solid #EDEDEF"><span style="font-weight: 500">Share my commands with my team</span><button type="button" role="switch" aria-checked="false" aria-label="Share my commands with my team" style="flex: none; width: 36px; height: 22px; border: 0; border-radius: 11px; background: #D4D4D8; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 8px; background: #FFFFFF"></span></button></div>
+          </div>
+          <p style="margin: 0; padding: 14px 16px; border-radius: 12px; background: #FAFAFA; font-size: 13.5px; color: #3F3F46">Every approval, data access and model change is logged in Snowflake against your user. This can't be turned off.</p>
+          <div style="display: flex; gap: 8px">
+            <button type="button" style="height: 36px; padding: 0 14px; border: 1px solid #E4E4E7; border-radius: 8px; background: #FFFFFF; font-size: 13.5px; cursor: pointer">Export my data</button>
+            <button type="button" style="height: 36px; padding: 0 14px; border: 1px solid #E4E4E7; border-radius: 8px; background: #FFFFFF; font-size: 13.5px; cursor: pointer">Delete request history</button>
+          </div>
+        </section>
+      </sc-if>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"startSection":{"editor":"enum","options":["general","memory","agent","commands","snowflake","budget","notify","privacy"],"default":"budget"},"$preview":{"width":1440,"height":1300}}'>
+var SECTIONS = [
+  { id: 'general', label: 'General' },
+  { id: 'memory', label: 'Memory' },
+  { id: 'agent', label: 'Agent behaviour' },
+  { id: 'commands', label: 'Commands' },
+  { id: 'snowflake', label: 'Snowflake and roles', gap: true },
+  { id: 'budget', label: 'Budget and usage' },
+  { id: 'notify', label: 'Notifications', gap: true },
+  { id: 'privacy', label: 'Privacy and audit' }
+];
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { section: null };
+  }
+  renderVals() {
+    var cur = this.state.section || this.props.startSection || 'budget';
+    return {
+      nav: SECTIONS.map((s) => ({ label: s.label, gap: !!s.gap, selected: s.id === cur, unselected: s.id !== cur, pick: () => this.setState({ section: s.id }) })),
+      sGeneral: cur === 'general', sMemory: cur === 'memory', sAgent: cur === 'agent', sCommands: cur === 'commands',
+      sSnowflake: cur === 'snowflake', sBudget: cur === 'budget', sNotify: cur === 'notify', sPrivacy: cur === 'privacy'
+    };
+  }
+}
+</script>
+</body>
+</html>

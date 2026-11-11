@@ -11,7 +11,17 @@ These are markdown exports of the Claude Doc "Model Desk — platform vision and
 
 ## UI mocks
 
-The mocks live in the Claude design canvas "Internal Auto-ML — chat UX":
+Source: Claude design canvas "Internal Auto-ML — chat UX":
 https://claude.ai/artifact/HesUzLJDsxfqTTBsMqQwTF
 
-The canvas holds v1 to v3 screens (Main, Discover, Loop, Deliver, V2*, V3*). The v3 "agentic" pages are the baseline layout.
+The v3 ("agentic") screens are the baseline layout and are in `mocks/v3/`:
+
+- `V3Home.dc.html`: Home, agent inbox sorted by what needs you
+- `V3Agent.dc.html`: agent at work (interactive demo)
+- `V3Live.dc.html`: live model, agent as caretaker
+- `V3Settings.dc.html`: settings (interactive)
+- `V3Composer.dc.html`: composer spec, `/` commands and Shift+Tab modes
+
+`mocks/canvas.json` is the canvas layout and notes for all three pages. It also lists the v1 and v2 boards, which are not in this repo yet; they remain in the canvas.
+
+The `.dc.html` files are design-canvas components. They load `./support.js`, which comes from the canvas runtime and is not included here, so open them in the canvas rather than directly in a browser.

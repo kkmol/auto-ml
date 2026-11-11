@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Model Desk v3 — Agent at work</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'Geist',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;color:#0A0A0B;-webkit-font-smoothing:antialiased}
+button,textarea{font-family:inherit}
+a{color:#2454D6}a:hover{color:#1A3FA6}
+.mono{font-family:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.shimmer{background:linear-gradient(90deg,#52525B 0%,#0A0A0B 45%,#52525B 90%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 2s linear infinite}
+@keyframes sh{from{background-position:100% 0}to{background-position:-100% 0}}
+.spin{animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.caret{display:inline-block;width:7px;height:15px;margin-left:1px;vertical-align:-2px;background:#2454D6;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.pulse{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.fade{animation:fade .5s ease-out}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap; background: #FFFFFF; font-size: 14.5px; line-height: 1.55">
+
+  <!-- Agent inbox -->
+  <nav aria-label="Your agents" style="flex: 1 1 248px; box-sizing: border-box; background: #FAFAFA; border-right: 1px solid #EDEDEF; padding: 14px 10px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 6px">
+      <span style="display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 14.5px">
+        <span style="width: 24px; height: 24px; border-radius: 6px; background: #0A0A0B; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round"><path d="M6 19v-5M12 19V9M18 19V5"></path></svg></span>
+        Model Desk
+      </span>
+      <button type="button" aria-label="New request" style="width: 32px; height: 32px; border: 1px solid #E4E4E7; border-radius: 8px; background: #FFFFFF; color: #3F3F46; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round"><path d="M12 5v14M5 12h14"></path></svg></button>
+    </div>
+    <a href="V3Home.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; text-decoration: none; color: #3F3F46; font-size: 13.5px">
+      <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>
+      Home
+    </a>
+
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <span style="display: flex; align-items: center; justify-content: space-between; padding: 0 10px 6px; font-size: 12px; font-weight: 500; color: #9A3B06">Needs you<span style="min-width: 18px; height: 18px; padding: 0 5px; box-sizing: border-box; border-radius: 9px; background: #FDE7D3; font-size: 11.5px; display: flex; align-items: center; justify-content: center">{{ needsCount }}</span></span>
+      <sc-if value="{{ finished }}" hint-placeholder-val="{{ false }}">
+        <a href="#" aria-current="page" class="fade" style="display: flex; flex-direction: column; padding: 7px 10px; border-radius: 8px; background: #FFFFFF; border: 1px solid #EDEDEF; text-decoration: none; color: #0A0A0B"><span style="font-size: 13.5px; font-weight: 500">SIPP transfer-out risk</span><span style="font-size: 12px; color: #9A3B06">Plan ready to approve</span></a>
+      </sc-if>
+      <a href="#" style="display: flex; flex-direction: column; padding: 7px 10px; border-radius: 8px; text-decoration: none; color: #0A0A0B"><span style="font-size: 13.5px; font-weight: 500">ISA top-up propensity</span><span style="font-size: 12px; color: #52525B">Needs data access</span></a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <span style="padding: 0 10px 6px; font-size: 12px; font-weight: 500; color: #52525B">Working</span>
+      <sc-if value="{{ working }}" hint-placeholder-val="{{ true }}">
+        <a href="#" aria-current="page" style="display: flex; flex-direction: column; gap: 4px; padding: 7px 10px; border-radius: 8px; background: #FFFFFF; border: 1px solid #EDEDEF; text-decoration: none; color: #0A0A0B">
+          <span style="display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13.5px; font-weight: 500">SIPP transfer-out risk<span class="pulse" style="width: 6px; height: 6px; border-radius: 3px; background: #2454D6"></span></span>
+          <span style="height: 3px; border-radius: 2px; background: #E4E4E7; position: relative; display: block"><span style="position: absolute; left: 0; top: 0; bottom: 0; width: {{ progressPct }}; border-radius: 2px; background: #2454D6"></span></span>
+          <span style="font-size: 12px; color: #52525B">{{ navStatus }}</span>
+        </a>
+      </sc-if>
+      <a href="#" style="display: flex; flex-direction: column; gap: 4px; padding: 7px 10px; border-radius: 8px; text-decoration: none; color: #0A0A0B">
+        <span style="display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13.5px; font-weight: 500">Complaint themes<span class="pulse" style="width: 6px; height: 6px; border-radius: 3px; background: #2454D6"></span></span>
+        <span style="font-size: 12px; color: #52525B">Grouping complaints · step 4 of 6</span>
+      </a>
+      <a href="#" style="display: flex; flex-direction: column; gap: 4px; padding: 7px 10px; border-radius: 8px; text-decoration: none; color: #0A0A0B">
+        <span style="display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13.5px; font-weight: 500">Fund switch volumes<span class="pulse" style="width: 6px; height: 6px; border-radius: 3px; background: #2454D6"></span></span>
+        <span style="font-size: 12px; color: #52525B">Improving in background</span>
+      </a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <span style="padding: 0 10px 6px; font-size: 12px; font-weight: 500; color: #52525B">Live models</span>
+      <a href="V3Live.dc.html" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 10px; border-radius: 8px; text-decoration: none; color: #0A0A0B; font-size: 13.5px">Call volume forecast<span style="font-size: 12px; color: #1D44B0">2 suggestions</span></a>
+      <a href="#" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 10px; border-radius: 8px; text-decoration: none; color: #0A0A0B; font-size: 13.5px">Complaint routing<span style="font-size: 12px; color: #52525B">Healthy</span></a>
+    </div>
+
+    <div style="margin-top: auto; display: flex; flex-direction: column; gap: 6px">
+      <button type="button" aria-label="Snowflake role: RETENTION_ANALYST. Switch role" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; height: 34px; padding: 0 10px; border: 1px solid #EDEDEF; border-radius: 8px; background: #FFFFFF; color: #3F3F46; cursor: pointer">
+        <span style="display: flex; align-items: center; gap: 7px; min-width: 0"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"></path></svg><span class="mono" style="font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">RETENTION_ANALYST</span></span>
+        <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+      <a href="V3Settings.dc.html" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border-radius: 8px; text-decoration: none; color: #0A0A0B">
+        <span style="display: flex; align-items: center; gap: 10px">
+          <span style="width: 28px; height: 28px; border-radius: 14px; background: #EEF2FE; color: #1D44B0; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 600">SP</span>
+          <span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; font-weight: 500">Sam Patel</span><span style="font-size: 12px; color: #52525B">Settings</span></span>
+        </span>
+        <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" style="color: #52525B; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Activity -->
+  <main style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column">
+    <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 24px; border-bottom: 1px solid #EDEDEF">
+      <div style="display: flex; align-items: center; gap: 12px; min-width: 0">
+        <h1 style="margin: 0; font-size: 15px; font-weight: 600">SIPP transfer-out risk</h1>
+        <sc-if value="{{ running }}" hint-placeholder-val="{{ true }}">
+          <span style="display: flex; align-items: center; gap: 7px; font-size: 13px; color: #52525B"><span class="pulse" style="width: 7px; height: 7px; border-radius: 4px; background: #2454D6"></span>{{ headerStatus }}</span>
+        </sc-if>
+        <sc-if value="{{ paused }}" hint-placeholder-val="{{ false }}">
+          <span style="display: flex; align-items: center; gap: 7px; font-size: 13px; color: #52525B"><span style="width: 7px; height: 7px; border-radius: 4px; background: #A1A1AA"></span>Paused</span>
+        </sc-if>
+        <sc-if value="{{ finished }}" hint-placeholder-val="{{ false }}">
+          <span style="display: flex; align-items: center; gap: 7px; font-size: 13px; color: #9A3B06"><span style="width: 7px; height: 7px; border-radius: 4px; background: #D9590B"></span>Waiting for you</span>
+        </sc-if>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px">
+        <button type="button" onClick="{{ replay }}" style="height: 32px; padding: 0 10px; border: 1px dashed #D4D4D8; border-radius: 8px; background: none; color: #52525B; font-size: 12.5px; cursor: pointer">Replay demo</button>
+        <sc-if value="{{ working }}" hint-placeholder-val="{{ true }}">
+          <button type="button" onClick="{{ togglePause }}" style="display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border: 1px solid #E4E4E7; border-radius: 8px; background: #FFFFFF; color: #0A0A0B; font-size: 13px; font-weight: 500; cursor: pointer">
+            <sc-if value="{{ running }}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" style="fill: currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg></sc-if>
+            <sc-if value="{{ paused }}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" style="fill: currentColor"><path d="M7 4l13 8-13 8z"></path></svg></sc-if>
+            {{ pauseLabel }}
+          </button>
+          <button type="button" aria-label="Stop the agent" style="width: 32px; height: 32px; border: 1px solid #E4E4E7; border-radius: 8px; background: #FFFFFF; color: #3F3F46; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" style="fill: currentColor"><rect x="4" y="4" width="16" height="16" rx="3"></rect></svg></button>
+        </sc-if>
+      </div>
+    </header>
+
+    <div style="flex: 1; width: 100%; max-width: 700px; margin: 0 auto; box-sizing: border-box; padding: 32px 24px 24px; display: flex; flex-direction: column; gap: 20px">
+      <button type="button" aria-expanded="false" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 0; color: #52525B; font-size: 13.5px; cursor: pointer; text-align: left">
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="m9 18 6-6-6-6"></path></svg>
+        You asked which SIPP clients are about to transfer out · 90 days' warning · about 500 calls a week
+      </button>
+      <p style="margin: 0">On it. I'll find the data and check it's usable, then bring you a plan to approve.</p>
+
+      <div aria-live="polite" style="display: flex; flex-direction: column; gap: 14px">
+        <sc-for list="{{ items }}" as="it" hint-placeholder-count="2">
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <sc-if value="{{ it.isDone }}" hint-placeholder-val="{{ true }}">
+              <button type="button" aria-expanded="{{ it.expandedStr }}" onClick="{{ it.toggle }}" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 2px 0; color: #52525B; font-size: 13.5px; cursor: pointer; text-align: left">
+                <sc-if value="{{ it.expanded }}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="m6 9 6 6 6-6"></path></svg></sc-if>
+                <sc-if value="{{ it.collapsed }}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="m9 18 6-6-6-6"></path></svg></sc-if>
+                {{ it.done }}
+              </button>
+            </sc-if>
+            <sc-if value="{{ it.isActive }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+                <span style="display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" class="spin" width="14" height="14" viewBox="0 0 24 24" style="flex: none; color: #2454D6; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round"><path d="M21 12a9 9 0 1 1-6.22-8.56"></path></svg><span class="shimmer" style="font-size: 14px; font-weight: 500">{{ it.title }}</span></span>
+                <span class="mono" style="font-size: 12.5px; color: #71717A">{{ it.elapsed }}</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{ it.showBody }}" hint-placeholder-val="{{ false }}">
+              <div style="padding-left: 20px; display: flex; flex-direction: column; gap: 8px">
+                <sc-if value="{{ it.isText }}" hint-placeholder-val="{{ false }}">
+                  <p style="margin: 0; font-size: 14px; color: #52525B">{{ it.bodyShown }}</p>
+                </sc-if>
+                <sc-if value="{{ it.isChips }}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-wrap: wrap; gap: 6px">
+                    <sc-for list="{{ it.chipsShown }}" as="c" hint-placeholder-count="3">
+                      <span class="fade" style="padding: 3px 10px; border-radius: 999px; background: #F4F4F5; font-size: 13px; color: #3F3F46">{{ c }}</span>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ it.isCode }}" hint-placeholder-val="{{ false }}">
+                  <div style="border: 1px solid #EDEDEF; border-radius: 12px; background: #FAFAFA; overflow: hidden">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 8px 6px 14px; border-bottom: 1px solid #EDEDEF">
+                      <span style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #52525B"><span class="mono" style="font-size: 12px; font-weight: 500; color: #3F3F46">{{ it.lang }}</span>· {{ it.where }}</span>
+                      <span style="display: flex; align-items: center; gap: 4px">
+                        <span style="font-size: 12.5px; color: #52525B">{{ it.codeStatus }}</span>
+                        <button type="button" aria-label="Copy code" style="width: 30px; height: 30px; border: 0; border-radius: 6px; background: none; color: #71717A; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"></path></svg></button>
+                      </span>
+                    </div>
+                    <pre class="mono" style="margin: 0; padding: 12px 14px; font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; color: #27272A">{{ it.codeShown }}<sc-if value="{{ it.typing }}" hint-placeholder-val="{{ false }}"><span class="caret"></span></sc-if></pre>
+                    <sc-if value="{{ it.hasResult }}" hint-placeholder-val="{{ false }}">
+                      <div style="display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-top: 1px solid #EDEDEF; font-size: 13px; color: #3F3F46; background: #FFFFFF">
+                        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="flex: none; color: #2454D6; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round"><path d="M20 6 9 17l-5-5"></path></svg>{{ it.result }}
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ finished }}" hint-placeholder-val="{{ false }}">
+        <div class="fade" style="display: flex; flex-direction: column; gap: 14px">
+          <p style="margin: 0">The data's usable. About <strong style="font-weight: 600">2 in 100</strong> SIPP clients ask to transfer in any 90-day window, so I'll judge the model on the clients it flags, not overall accuracy. Here's the plan:</p>
+          <section aria-label="Plan to approve" style="border: 1px solid #E4E4E7; border-radius: 16px; box-shadow: 0 8px 24px rgba(10,10,11,0.06); padding: 20px; display: flex; flex-direction: column; gap: 16px">
+            <dl style="margin: 0; display: grid; grid-template-columns: 112px 1fr; row-gap: 10px; column-gap: 16px">
+              <dt style="color: #52525B; font-size: 14px">Good enough</dt>
+              <dd style="margin: 0">At least <strong style="font-weight: 600">1 in 5</strong> of your 500 weekly calls reach someone about to leave. Random calling gets 1 in 50.</dd>
+              <dt style="color: #52525B; font-size: 14px">Also</dt>
+              <dd style="margin: 0">Beats ISA Transfer Risk v3, and fair across age and gender</dd>
+              <dt style="color: #52525B; font-size: 14px">Budget</dt>
+              <dd style="margin: 0">Up to 3 rounds, about an hour, 40 credits. Your default from settings.</dd>
+            </dl>
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 12px 14px; border-radius: 12px; background: #FAFAFA">
+              <div style="display: flex; flex-direction: column; gap: 2px">
+                <span id="v3notes" style="font-size: 14px; font-weight: 500">Use contact centre notes</span>
+                <span style="font-size: 13px; color: #52525B"><span class="mono" style="font-size: 12px">RETENTION_ANALYST</span> can read these, but they're Confidential, so I always ask. Only summaries leave Snowflake. Your OK is logged.</span>
+              </div>
+              <button type="button" role="switch" aria-checked="true" aria-labelledby="v3notes" style="flex: none; width: 44px; height: 26px; border: 0; border-radius: 13px; background: #2454D6; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: 21px; width: 20px; height: 20px; border-radius: 10px; background: #FFFFFF"></span></button>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 8px">
+              <button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 10px; background: none; color: #3F3F46; font-size: 14px; cursor: pointer">Change something</button>
+              <button type="button" style="height: 40px; padding: 0 18px; border: 0; border-radius: 10px; background: #0A0A0B; color: #FFFFFF; font-size: 14px; font-weight: 500; cursor: pointer">{{ approveLabel }}</button>
+            </div>
+          </section>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- Composer -->
+    <div style="width: 100%; max-width: 700px; margin: 0 auto; box-sizing: border-box; padding: 0 24px 24px; display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 6px; font-size: 13px; color: #52525B">
+        <span style="display: flex; align-items: center; gap: 8px; min-width: 0"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>Queued: "Leave out clients already taking an income"</span>
+        <span style="flex: none">added to the plan at the next step</span>
+      </div>
+      <div style="position: relative">
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <div id="slash-menu" role="listbox" aria-label="Commands" style="position: absolute; left: 0; right: 0; bottom: calc(100% + 8px); z-index: 5; max-height: 360px; overflow: auto; box-sizing: border-box; padding: 6px; border: 1px solid #E4E4E7; border-radius: 14px; background: #FFFFFF; box-shadow: 0 16px 40px rgba(10,10,11,0.14)">
+            <sc-for list="{{ cmds }}" as="c" hint-placeholder-count="6">
+              <div>
+                <sc-if value="{{ c.showGroup }}" hint-placeholder-val="{{ false }}"><div style="padding: 8px 10px 4px; font-size: 11.5px; font-weight: 500; color: #52525B">{{ c.group }}</div></sc-if>
+                <button type="button" role="option" aria-selected="{{ c.selStr }}" onClick="{{ c.pick }}" style="width: 100%; display: flex; align-items: baseline; gap: 14px; padding: 7px 10px; border: 0; border-radius: 8px; background: {{ c.bg }}; text-align: left; cursor: pointer">
+                  <span class="mono" style="flex: none; width: 128px; font-size: 13px; color: #0A0A0B">{{ c.name }}</span>
+                  <span style="font-size: 13px; color: #52525B">{{ c.desc }}</span>
+                </button>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noCmds }}" hint-placeholder-val="{{ false }}"><div style="padding: 10px; font-size: 13px; color: #52525B">No matching command. Press Enter to send it as a message.</div></sc-if>
+            <div style="display: flex; gap: 14px; padding: 8px 10px 4px; margin-top: 4px; border-top: 1px solid #EDEDEF; font-size: 11.5px; color: #52525B"><span>↑↓ to move</span><span>Enter to choose</span><span>Esc to close</span></div>
+          </div>
+        </sc-if>
+        <div style="display: flex; align-items: flex-end; gap: 8px; border: 1px solid {{ boxBorder }}; border-radius: 16px; padding: 8px 8px 8px 16px; background: #FFFFFF">
+          <label for="v3a" class="sr">Steer the agent, or type / for commands</label>
+          <textarea id="v3a" rows="1" value="{{ draft }}" onChange="{{ onDraft }}" onKeyDown="{{ onKey }}" aria-controls="slash-menu" placeholder="Steer the agent, or type / for commands" style="flex: 1; border: 0; outline: none; resize: none; font-size: 15px; line-height: 1.55; padding: 8px 0; color: #0A0A0B; background: transparent"></textarea>
+          <button type="button" aria-label="Send" style="flex: none; width: 38px; height: 38px; border: 0; border-radius: 19px; background: #F4F4F5; color: #71717A; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="m5 12 7-7 7 7M12 19V5"></path></svg></button>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 0 6px; font-size: 12.5px">
+        <button type="button" onClick="{{ cycleMode }}" title="{{ modeHelp }}" style="display: flex; align-items: center; gap: 7px; border: 0; background: none; padding: 4px 0; color: {{ modeColor }}; font-size: 12.5px; font-weight: 500; cursor: pointer">
+          <sc-if value="{{ isAsk }}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4M12 16h.01"></path></svg></sc-if>
+          <sc-if value="{{ isAuto }}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="fill: currentColor"><path d="M3 5l9 7-9 7zM12 5l9 7-9 7z"></path></svg></sc-if>
+          <sc-if value="{{ isPlan }}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" style="fill: currentColor"><rect x="5" y="4" width="5" height="16" rx="1"></rect><rect x="14" y="4" width="5" height="16" rx="1"></rect></svg></sc-if>
+          {{ modeLabel }}
+          <span style="font-weight: 400; color: #71717A">(shift+tab to cycle)</span>
+        </button>
+        <span style="color: #52525B">{{ credits }} of 40 credits · <span class="mono">/</span> for commands</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Plan, outputs, access -->
+  <aside aria-label="Agent plan and outputs" style="flex: 1 1 320px; min-width: 0; box-sizing: border-box; background: #FAFAFA; border-left: 1px solid #EDEDEF; padding: 20px 20px 28px; display: flex; flex-direction: column; gap: 28px">
+
+    <section aria-label="Plan" style="display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px">
+        <h2 style="margin: 0; font-size: 13.5px; font-weight: 600">Plan</h2>
+        <span style="font-size: 12px; color: #52525B">{{ planCount }}</span>
+      </div>
+      <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px">
+        <sc-for list="{{ plan }}" as="s" hint-placeholder-count="7">
+          <li style="display: flex; align-items: flex-start; gap: 10px; padding: 6px 8px; border-radius: 8px; background: {{ s.bg }}">
+            <span style="flex: none; width: 16px; height: 16px; margin-top: 2px; display: flex; align-items: center; justify-content: center">
+              <sc-if value="{{ s.isDone }}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" style="color: #2454D6; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+              <sc-if value="{{ s.isActive }}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" class="spin" width="14" height="14" viewBox="0 0 24 24" style="color: #2454D6; fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round"><path d="M21 12a9 9 0 1 1-6.22-8.56"></path></svg></sc-if>
+              <sc-if value="{{ s.isWaiting }}" hint-placeholder-val="{{ false }}"><span style="width: 10px; height: 10px; border-radius: 5px; background: #D9590B"></span></sc-if>
+              <sc-if value="{{ s.isPending }}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="color: #A1A1AA; fill: none; stroke: currentColor; stroke-width: 2; stroke-dasharray: 3 3"><circle cx="12" cy="12" r="9"></circle></svg></sc-if>
+            </span>
+            <span style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+              <span style="font-size: 13.5px; color: {{ s.color }}; font-weight: {{ s.weight }}">{{ s.label }}</span>
+              <sc-if value="{{ s.hasNote }}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #52525B">{{ s.note }}</span></sc-if>
+            </span>
+            <sc-if value="{{ s.isHuman }}" hint-placeholder-val="{{ false }}"><span style="flex: none; margin-top: 1px; padding: 0 7px; border-radius: 999px; border: 1px solid #E4E4E7; background: #FFFFFF; font-size: 11.5px; color: #52525B">You</span></sc-if>
+          </li>
+        </sc-for>
+      </ol>
+    </section>
+
+    <section aria-label="Outputs" style="display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 13.5px; font-weight: 600">Outputs</h2>
+      <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px">
+        <sc-for list="{{ outputs }}" as="o" hint-placeholder-count="2">
+          <li class="fade">
+            <a href="#" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: #FFFFFF; border: 1px solid #EDEDEF; text-decoration: none; color: #0A0A0B">
+              <span style="flex: none; width: 28px; height: 28px; border-radius: 7px; background: #F4F4F5; color: #3F3F46; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg></span>
+              <span style="display: flex; flex-direction: column; min-width: 0; line-height: 1.35"><span style="font-size: 13.5px; font-weight: 500">{{ o.name }}</span><span style="font-size: 12px; color: #52525B">{{ o.meta }}</span></span>
+            </a>
+          </li>
+        </sc-for>
+      </ul>
+    </section>
+
+    <section aria-label="Running as" style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px">
+        <h2 style="margin: 0; font-size: 13.5px; font-weight: 600">Running as you</h2>
+        <a href="V3Settings.dc.html" style="font-size: 12.5px; text-decoration: none">Change</a>
+      </div>
+      <dl style="margin: 0; display: grid; grid-template-columns: 84px 1fr; row-gap: 6px; column-gap: 10px; font-size: 13px">
+        <dt style="color: #52525B">Role</dt><dd class="mono" style="margin: 0; font-size: 12.5px">RETENTION_ANALYST</dd>
+        <dt style="color: #52525B">Warehouse</dt><dd class="mono" style="margin: 0; font-size: 12.5px">ML_WH_S</dd>
+        <dt style="color: #52525B">Writes to</dt><dd class="mono" style="margin: 0; font-size: 12.5px">ML_PROTO.SPATEL</dd>
+      </dl>
+      <span style="font-size: 12.5px; color: #52525B">The agent can only see and change what this role can.</span>
+    </section>
+  </aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+var SQL = `-- How often do SIPP clients ask to transfer out?
+SELECT
+  COUNT(DISTINCT s.client_id)              AS clients,
+  AVG(IFF(t.request_date BETWEEN s.snapshot_date
+          AND DATEADD(day, 90, s.snapshot_date),
+          1, 0))                           AS transfer_rate_90d
+FROM PROD_ANALYTICS.SIPP_ACCOUNT_WEEKLY s
+LEFT JOIN PROD_ANALYTICS.TRANSFER_OUT_EVENTS t
+  ON t.client_id = s.client_id
+WHERE s.account_status = 'ACTIVE'
+  AND s.snapshot_date >= '2023-01-01';`;
+
+var PY = `from snowflake.snowpark import functions as F
+
+wk = ["client_id", "snapshot_wk"]
+
+logins = (session.table("WEB_SESSIONS")
+    .group_by(wk)
+    .agg(F.count("*").alias("logins_30d")))
+
+calls = (session.table("CONTACT_INTERACTIONS")
+    .filter(F.col("channel") == "PHONE")
+    .group_by(wk)
+    .agg(F.count("*").alias("calls_30d")))
+
+features = (session.table("SIPP_ACCOUNT_WEEKLY")
+    .join(logins, wk, "left")
+    .join(calls, wk, "left"))
+
+features.write.save_as_table("ML_PROTO.SPATEL.SIPP_FEATURES")`;
+
+var STEPS = [
+  { kind: 'text', plan: 1, title: 'Thinking about where the signal is', done: 'Thought for 6s', body: 'Clients usually go quiet before they leave, and some call us first. Start with logins, calls and holdings, plus whatever the ISA model already uses.', ticks: 60 },
+  { kind: 'chips', plan: 1, title: 'Searching the ontology', done: 'Found 6 relevant entities your role can read, and 1 related model · 8s', chips: ['Client', 'SIPP Account', 'Transfer Out Request', 'Web Session', 'Contact Interaction', 'Fund Holding'], ticks: 58 },
+  { kind: 'code', plan: 2, lang: 'SQL', where: 'Snowflake · RETENTION_ANALYST', title: 'Checking how often transfers happen', done: 'Profiled 6 tables · 11 queries · 1m 12s', code: SQL, result: '412,118 clients · 2.0% ask to transfer within 90 days', run: 45, output: { name: 'Data profile', meta: '6 tables · 3 leaky fields excluded' } },
+  { kind: 'code', plan: 3, lang: 'Python', where: 'Snowpark · ML_WH_S', title: 'Writing the feature pipeline', done: 'Built 24 signals · 46s', code: PY, result: '9.4M client-weeks · saved to ML_PROTO.SPATEL.SIPP_FEATURES', run: 45, output: { name: 'Feature table', meta: 'ML_PROTO.SPATEL.SIPP_FEATURES · 24 signals' } }
+];
+var PLAN = [
+  { label: 'Understand the question', human: true },
+  { label: 'Find the right data' },
+  { label: 'Check how often transfers happen' },
+  { label: 'Build the signals' },
+  { label: 'Agree the plan', human: true },
+  { label: 'Train and test, up to 3 rounds' },
+  { label: 'Hand over the model', human: true }
+];
+var MODES = [
+  { id: 'ask', label: 'Ask before running', color: '#52525B', help: 'I research on my own, but ask before each training run or anything that writes data.', train: 'Asks before each round', approve: 'Approve and train' },
+  { id: 'auto', label: 'Auto within budget', color: '#9A3B06', help: 'I keep going on my own until I hit the budget. Sensitive data and going live still need you.', train: 'Runs on its own within budget', approve: 'Approve and train' },
+  { id: 'plan', label: 'Plan mode', color: '#1D44B0', help: 'I only research and plan. Nothing is trained or written.', train: 'Not in plan mode', approve: 'Approve plan' }
+];
+var COMMANDS = [
+  { name: '/plan', desc: "Show or edit the agent's plan", group: 'This agent' },
+  { name: '/data', desc: 'Browse the data your role can see', group: 'This agent' },
+  { name: '/budget', desc: "Change this request's budget", group: 'This agent' },
+  { name: '/pause', desc: 'Pause the agent', group: 'This agent' },
+  { name: '/explain', desc: 'Explain the last step in plain English', group: 'This agent' },
+  { name: '/compare', desc: 'Compare rounds side by side', group: 'This agent' },
+  { name: '/golive', desc: 'Start the go-live checklist', group: 'This agent' },
+  { name: '/share', desc: 'Share with a person or team', group: 'This agent' },
+  { name: '/role', desc: 'Switch Snowflake role', group: 'You' },
+  { name: '/level', desc: 'Change how much jargon I use', group: 'You' },
+  { name: '/settings', desc: 'Open settings', group: 'You' },
+  { name: '/weekly-list', desc: "Export the top N in the dialler's format", group: 'Your commands' },
+  { name: '/manager-summary', desc: 'One-page summary for your manager', group: 'Your commands' }
+];
+var CPT = 5;
+function stepTicks(s) { return s.kind === 'code' ? Math.ceil(s.code.length / CPT) + s.run : s.ticks; }
+var TOTAL = STEPS.reduce(function (a, s) { return a + stepTicks(s); }, 0);
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { i: 0, p: 0, finished: false, paused: false, open: {}, mode: 'ask', draft: '', sel: 0, menuClosed: false };
+  }
+  componentDidMount() { this.timer = setInterval(() => this.tick(), 40); }
+  componentWillUnmount() { clearInterval(this.timer); }
+  tick() {
+    var st = this.state;
+    if (st.finished || st.paused) return;
+    var s = STEPS[st.i];
+    if (st.p + 1 >= stepTicks(s)) {
+      if (st.i + 1 < STEPS.length) this.setState({ i: st.i + 1, p: 0 });
+      else this.setState({ finished: true });
+    } else {
+      this.setState({ p: st.p + 1 });
+    }
+  }
+  matches() {
+    var d = this.state.draft;
+    if (d.charAt(0) !== '/' || d.indexOf(' ') !== -1) return [];
+    var q = d.slice(1).toLowerCase();
+    return COMMANDS.filter(function (c) { return c.name.slice(1).indexOf(q) === 0; });
+  }
+  cycle() {
+    var idx = MODES.findIndex((m) => m.id === this.state.mode);
+    this.setState({ mode: MODES[(idx + 1) % MODES.length].id });
+  }
+  choose(c) {
+    this.setState({ draft: c.name + ' ', sel: 0 });
+  }
+  renderVals() {
+    var st = this.state;
+    var count = st.finished ? STEPS.length : st.i + 1;
+    var items = STEPS.slice(0, count).map((s, k) => {
+      var isDone = st.finished || k < st.i;
+      var isActive = !isDone;
+      var p = isActive ? st.p : stepTicks(s);
+      var expanded = isDone && !!st.open[k];
+      var typed = s.kind === 'code' ? Math.min(s.code.length, p * CPT) : 0;
+      var typing = s.kind === 'code' && typed < s.code.length;
+      var secs = Math.floor(p / 2);
+      return {
+        isDone: isDone, isActive: isActive, expanded: expanded, collapsed: !expanded,
+        expandedStr: expanded ? 'true' : 'false',
+        toggle: () => { var o = Object.assign({}, this.state.open); o[k] = !o[k]; this.setState({ open: o }); },
+        showBody: isActive || expanded,
+        title: s.title, done: s.done,
+        elapsed: '0:' + (secs < 10 ? '0' : '') + secs,
+        isText: s.kind === 'text',
+        bodyShown: s.kind === 'text' ? s.body.slice(0, isActive ? p * 4 : s.body.length) : '',
+        isChips: s.kind === 'chips',
+        chipsShown: s.kind === 'chips' ? s.chips.slice(0, isActive ? Math.floor(p / 8) : s.chips.length) : [],
+        isCode: s.kind === 'code', lang: s.lang || '', where: s.where || '',
+        codeShown: s.kind === 'code' ? s.code.slice(0, typed) : '',
+        typing: typing,
+        codeStatus: s.kind !== 'code' ? '' : (typing ? 'Writing…' : (isActive ? 'Running…' : 'Done')),
+        hasResult: s.kind === 'code' && !typing && !isActive,
+        result: s.result || ''
+      };
+    });
+
+    var mode = MODES.filter((m) => m.id === st.mode)[0];
+    var activePlan = st.finished ? 4 : STEPS[st.i].plan;
+    var plan = PLAN.map((s, k) => {
+      var isDone = k < activePlan;
+      var isActive = !st.finished && k === activePlan;
+      var isWaiting = st.finished && k === activePlan;
+      var isPending = k > activePlan;
+      var note = '';
+      if (isActive && st.paused) note = 'Paused';
+      else if (isActive) note = STEPS[st.i].title;
+      else if (isWaiting) note = 'Waiting for your OK';
+      else if (k === 5) note = mode.train;
+      return {
+        label: s.label, isHuman: !!s.human,
+        isDone: isDone, isActive: isActive, isWaiting: isWaiting, isPending: isPending,
+        hasNote: note !== '', note: note,
+        bg: (isActive || isWaiting) ? '#FFFFFF' : 'transparent',
+        color: isPending ? '#52525B' : '#0A0A0B',
+        weight: (isActive || isWaiting) ? '500' : '400'
+      };
+    });
+
+    var outputs = [{ name: 'Brief', meta: 'Question, horizon and call capacity' }];
+    STEPS.forEach((s, k) => { if (s.output && (st.finished || k < st.i)) outputs.push(s.output); });
+    if (st.finished) outputs.push({ name: 'Plan v1', meta: 'Draft · waiting for your OK' });
+
+    var doneTicks = 0;
+    for (var k = 0; k < st.i; k++) doneTicks += stepTicks(STEPS[k]);
+    var frac = st.finished ? 1 : (doneTicks + st.p) / TOTAL;
+    var running = !st.finished && !st.paused;
+
+    var found = this.matches();
+    var menuOpen = st.draft.charAt(0) === '/' && st.draft.indexOf(' ') === -1 && !st.menuClosed;
+    var sel = Math.min(st.sel, Math.max(0, found.length - 1));
+    var lastGroup = '';
+    var cmds = found.map((c, k) => {
+      var showGroup = c.group !== lastGroup;
+      lastGroup = c.group;
+      return { name: c.name, desc: c.desc, group: c.group, showGroup: showGroup, selStr: k === sel ? 'true' : 'false', bg: k === sel ? '#F4F4F5' : 'transparent', pick: () => this.choose(c) };
+    });
+
+    return {
+      items: items, plan: plan, outputs: outputs,
+      planCount: (st.finished ? 4 : activePlan) + ' of 7 done',
+      working: !st.finished, finished: st.finished, running: running, paused: !st.finished && st.paused,
+      pauseLabel: st.paused ? 'Resume' : 'Pause',
+      togglePause: () => this.setState({ paused: !this.state.paused }),
+      headerStatus: 'Step ' + (activePlan + 1) + ' of 7 · about ' + Math.max(1, 4 - st.i) + ' min to your next decision',
+      navStatus: 'Step ' + (activePlan + 1) + ' of 7 · ' + PLAN[activePlan].label.toLowerCase(),
+      progressPct: Math.round(((activePlan + (st.finished ? 0 : 0.5)) / 7) * 100) + '%',
+      needsCount: st.finished ? '2' : '1',
+      credits: (0.2 + frac * 1.1).toFixed(1),
+      approveLabel: mode.approve,
+      modeLabel: mode.label, modeColor: mode.color, modeHelp: mode.help,
+      isAsk: mode.id === 'ask', isAuto: mode.id === 'auto', isPlan: mode.id === 'plan',
+      cycleMode: () => this.cycle(),
+      draft: st.draft,
+      menuOpen: menuOpen, cmds: cmds, noCmds: menuOpen && found.length === 0,
+      boxBorder: menuOpen ? '#A1A1AA' : '#E4E4E7',
+      onDraft: (e) => this.setState({ draft: e.target.value, sel: 0, menuClosed: false }),
+      onKey: (e) => {
+        if (e.key === 'Tab' && e.shiftKey) { e.preventDefault(); this.cycle(); return; }
+        if (!menuOpen) return;
+        var n = this.matches().length;
+        if (e.key === 'ArrowDown') { e.preventDefault(); this.setState({ sel: (sel + 1) % Math.max(1, n) }); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); this.setState({ sel: (sel - 1 + Math.max(1, n)) % Math.max(1, n) }); }
+        else if (e.key === 'Enter' && n > 0) { e.preventDefault(); this.choose(this.matches()[sel]); }
+        else if (e.key === 'Escape') { e.preventDefault(); this.setState({ menuClosed: true }); }
+      },
+      replay: () => this.setState({ i: 0, p: 0, finished: false, paused: false, open: {} })
+    };
+  }
+}
+</script>
+</body>
+</html>
